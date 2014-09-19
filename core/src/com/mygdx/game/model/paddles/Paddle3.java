@@ -11,19 +11,21 @@ import com.mygdx.game.LouieGame;
  * Created by Administratör on 2014-09-17.
  */
 public class Paddle3 extends Paddle {
-    public Paddle3(GameScreen gameScreen) {
-        super(gameScreen);
+    public Paddle3( ) {
+        super();
         this.setHandle(new Sprite(new Texture(Gdx.files.internal("images/handle3.png"))));
         this.setHitter(new Sprite(new Texture(Gdx.files.internal("images/hitter3.png"))));
     }
 
+
+
     @Override
-    public void setPositions() {
-        getHandle().setPosition((int) (LouieGame.ORIGO.x - getGameScreen().getCircleRadius() - getHandle().getWidth() - getHitter().getWidth()/2) ,
+    public void setPositions(GameScreen gameScreen) {
+        getHandle().setPosition((int) (LouieGame.ORIGO.x - gameScreen.getCircleRadius() - getHandle().getWidth() - getHitter().getWidth()/2) ,
                 (int) (LouieGame.ORIGO.y) - getHitter().getHeight()/3);
 
 
-        getHitter().setPosition((int) (LouieGame.ORIGO.x - getGameScreen().getCircleRadius() - getHitter().getWidth()/2) ,
+        getHitter().setPosition((int) (LouieGame.ORIGO.x - gameScreen.getCircleRadius() - getHitter().getWidth()/2) ,
                 (int) (LouieGame.ORIGO.y - getHitter().getHeight()/2));
     }
 }

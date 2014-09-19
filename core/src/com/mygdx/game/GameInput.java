@@ -3,7 +3,6 @@ package com.mygdx.game;
 import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
-import com.mygdx.game.model.Louie;
 import com.mygdx.game.model.paddles.Paddle;
 
 
@@ -15,17 +14,19 @@ public class GameInput extends InputAdapter {
 
     private Paddle myPaddle;
     private TweenManager tweenManager;
+    private GameScreen gameScreen;
 
-    public GameInput(Paddle myPaddle, TweenManager tweenManager){
+    public GameInput(Paddle myPaddle, TweenManager tweenManager, GameScreen gameScreen){
 
         this.tweenManager = tweenManager;
         this.myPaddle = myPaddle;
+        this.gameScreen = gameScreen;
     }
     @Override
     public boolean keyDown(int keycode) {
         if(LouieGame.platform.equals("desktop")) {
             if (keycode == Input.Keys.SPACE) {
-                myPaddle.hit(tweenManager);
+                myPaddle.hit(tweenManager, gameScreen);
             }
         }
         return true;
@@ -34,7 +35,7 @@ public class GameInput extends InputAdapter {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if(LouieGame.platform.equals("android")){
-            myPaddle.hit(tweenManager);
+            myPaddle.hit(tweenManager, gameScreen);
         }
 
         return super.touchDown(screenX, screenY, pointer, button);

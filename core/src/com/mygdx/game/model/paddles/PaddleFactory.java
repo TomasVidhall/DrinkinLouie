@@ -8,18 +8,18 @@ import com.mygdx.game.GameScreen;
  */
 public class PaddleFactory {
 
-    public static Paddle createPaddle(int playerNumber, GameScreen gameScreen){
+    public static Paddle createPaddle(int playerNumber){
         switch (playerNumber){
             
             
             case 1:
-                    return new Paddle1(gameScreen);
+                    return new Paddle1();
             case 2:
-                    return new Paddle2(gameScreen);
+                    return new Paddle2();
             case 3:
-                    return new Paddle3(gameScreen);
+                    return new Paddle3();
             case 4:
-                    return new Paddle4(gameScreen);
+                    return new Paddle4();
             default:
                 return  null;
         }

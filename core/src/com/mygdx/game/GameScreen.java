@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import aurelienribon.tweenengine.TweenManager;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -19,26 +20,26 @@ import java.util.List;
  */
 public class GameScreen implements Screen {
     private final LouieGame game;
+    private GameSettings settings;
     private SpriteBatch spriteBatch;
     private ShapeRenderer shapeRenderer;
     private GameInput input;
     private TweenManager tweenManager;
     private int circleRadius;
     private List<Player> players;
-    public int numberOfChickens;
     private float overlapRectangleArea;
     public static boolean debug = false;
     private float totalTime = 0;
     private Center center;
 
 
-    public GameScreen(LouieGame game, List<Player> players, int numberOfLouies) {
+    public GameScreen(LouieGame game, List<Player> players, GameSettings gameSettings) {
         tweenManager = new TweenManager();
         this.game = game;
         circleRadius = 250;
-        this.numberOfChickens = 5;
         this.players = players;
-        center = new Center(circleRadius, this, numberOfLouies);
+        this.settings = gameSettings;
+        center = new Center(circleRadius, this, gameSettings.getNumberOfLouies());
     }
 
     @Override
@@ -47,18 +48,26 @@ public class GameScreen implements Screen {
         spriteBatch = new SpriteBatch();
         this.shapeRenderer = new ShapeRenderer();
 
+        decidePlayerPositions();
+        spawnChickens();
 
-        input = new GameInput(players.get(0).getPaddle(), tweenManager);
+        input = new GameInput(players.get(0).getPaddle(), tweenManager, this);
         Gdx.input.setInputProcessor(input);
 
-        decidePlayerPositions();
+
 
 
     }
 
+    private void spawnChickens() {
+        for(Player p: players){
+            p.spawnChickens(settings.getNumberOfChickens());
+        }
+    }
+
     private void decidePlayerPositions() {
         for (Player p : players) {
-            p.setPosition();
+            p.initPositions(p.getPlayerNumber(),this);
         }
 
     }
@@ -159,5 +168,9 @@ public class GameScreen implements Screen {
 
     public TweenManager getTweenManager() {
         return tweenManager;
+    }
+
+    public void hitPlayer(int playerNumber) {
+        System.out.println("HIT BY PLAYER " + playerNumber);
     }
 }

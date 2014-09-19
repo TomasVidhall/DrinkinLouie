@@ -3,12 +3,14 @@ package com.mygdx.game.model;
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameScreen;
 import com.mygdx.game.LouieGame;
 import com.mygdx.game.model.paddles.Paddle;
 import com.mygdx.game.model.paddles.PaddleFactory;
+import com.mygdx.game.network.GameClient;
 import com.mygdx.game.tween.SpriteAccessor;
 
 
@@ -26,48 +28,61 @@ public class Player {
     private int playerNumber;
     private float angle;
     private Vector2 chickenPosition;
-    private GameScreen gameScreen;
-    private List<Chicken> chickens;
+       private List<Chicken> chickens;
 
-    public Player(GameScreen gameScreen, int playerNumber) {
-        this.paddle = PaddleFactory.createPaddle(playerNumber, gameScreen);
-
-        this.gameScreen = gameScreen;
-        this.chickens = new ArrayList<Chicken>();
-        this.playerNumber = playerNumber;
-
-        chickenPosition = initChickenPosition(playerNumber);
-        spawnChickens();
+    public Player(){
 
     }
 
-    private Vector2 initChickenPosition(int playerNumber) {
-        Vector2 chickenPosition = new Vector2();
+    public Player(int playerNumber) {
+
+
+        this.chickens = new ArrayList<Chicken>();
+        this.playerNumber = playerNumber;
+        this.chickenPosition = new Vector2();
+
+
+    }
+
+    public void initPositions(int playerNumber, GameScreen gameScreen) {
+        this.paddle = PaddleFactory.createPaddle(playerNumber);
+        paddle.setPositions(gameScreen);
+        initChickenPosition(playerNumber,gameScreen);
+
+    }
+
+    private void initChickenPosition(int playerNumber, GameScreen gameScreen) {
+
         switch (playerNumber){
             case 1:
                 chickenPosition.set(LouieGame.ORIGO.x + gameScreen.getCircleRadius() - this.getPaddle().getHitter().getWidth()/2,
                         LouieGame.ORIGO.y - this.getPaddle().getHitter().getHeight()/2 - Chicken.CHICKENSIZE);
-                return chickenPosition;
+                break;
+
             case 2:
                 chickenPosition.set(LouieGame.ORIGO.x + this.getPaddle().getHitter().getWidth()/2 ,
                         LouieGame.ORIGO.y + gameScreen.getCircleRadius() - this.getPaddle().getHitter().getHeight()/2);
-                return chickenPosition;
+                break;
+
             case 3:
                 chickenPosition.set(LouieGame.ORIGO.x  - gameScreen.getCircleRadius() - this.getPaddle().getHitter().getWidth()/2,
                         LouieGame.ORIGO.y + this.getPaddle().getHitter().getHeight()/2);
-                return chickenPosition;
+                break;
+
             case 4:
                 chickenPosition.set(LouieGame.ORIGO.x  - this.getPaddle().getHitter().getWidth()/2 - Chicken.CHICKENSIZE
                         , LouieGame.ORIGO.y  - gameScreen.getCircleRadius() - this.getPaddle().getHitter().getHeight()/2);
-                return chickenPosition;
+
+                break;
+
             default:
-                return null;
+
         }
 
     }
 
-    private void spawnChickens() {
-        for (int i = 0 ; i < gameScreen.numberOfChickens; i++){
+    public void spawnChickens(int numberOfChickens) {
+        for (int i = 0 ; i < numberOfChickens; i++){
             Chicken c = new Chicken(this);
             switch (playerNumber){
                 case 1:
@@ -110,9 +125,6 @@ public class Player {
 
 
 
-    public void setPosition() {
-       this.paddle.setPositions();
-    }
 
     public int getPlayerNumber() {
         return playerNumber;

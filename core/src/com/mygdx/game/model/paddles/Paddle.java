@@ -18,22 +18,22 @@ public abstract class Paddle {
 
 
 
-    private GameScreen gameScreen;
+
     private float cooldown = 0.5f, riseTime = 0.25f;
 
-    public Paddle(GameScreen gameScreen) {
+    public Paddle( ) {
 
-        this.gameScreen = gameScreen;
+
 
 
     }
 
-    public boolean hit(final TweenManager tweenManager) {
+    public boolean hit(final TweenManager tweenManager, final GameScreen gameScreen) {
         if (!airborne) {
             Tween handleTween = Tween.to(handle, SpriteAccessor.SCALE, riseTime).target(0.5f).setCallback(new TweenCallback() {
                 @Override
                 public void onEvent(int i, BaseTween<?> baseTween) {
-                    checkHit();
+                    checkHit(gameScreen);
                     Tween handleTween = Tween.to(handle, SpriteAccessor.SCALE, cooldown).target(1f).setCallback(new TweenCallback() {
                         @Override
                         public void onEvent(int i, BaseTween<?> baseTween) {
@@ -58,7 +58,7 @@ public abstract class Paddle {
 
     }
 
-    private void checkHit() {
+    private void checkHit(GameScreen gameScreen) {
         gameScreen.checkPaddleHit(this.hitter.getBoundingRectangle());
     }
 
@@ -74,7 +74,7 @@ public abstract class Paddle {
         return hitter.getBoundingRectangle();
     }
 
-    public abstract void setPositions();
+    public abstract void setPositions(GameScreen gameScreen);
 
 
     public Sprite getHandle() {
@@ -93,7 +93,4 @@ public abstract class Paddle {
         this.handle = handle;
     }
 
-    public GameScreen getGameScreen() {
-        return gameScreen;
-    }
 }
