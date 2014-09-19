@@ -18,11 +18,11 @@ public class Paddle4 extends Paddle {
 
     @Override
     public void setPositions() {
-        getHandle().setPosition((int) (LouieGame.ORIGO.x + getHitter().getWidth()/3),
-                (int) (LouieGame.ORIGO.y) - getGameScreen().getCircleRadius() - 2*getHitter().getHeight()  );
+        getHandle().setPosition((int) (LouieGame.ORIGO.x - getHitter().getWidth()/3),
+                (int) (LouieGame.ORIGO.y) - getGameScreen().getCircleRadius() - getHitter().getHeight()/2 - getHandle().getHeight()  );
 
 
-        getHitter().setPosition((int) (LouieGame.ORIGO.x),
-                (int) (LouieGame.ORIGO.y) - getGameScreen().getCircleRadius() + getHitter().getHeight() );
+        getHitter().setPosition((int) (LouieGame.ORIGO.x - getHitter().getWidth()/2),
+                (int) (LouieGame.ORIGO.y) - getGameScreen().getCircleRadius() - getHitter().getHeight()/2 );
     }
 }

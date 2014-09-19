@@ -45,16 +45,20 @@ public class Player {
         Vector2 chickenPosition = new Vector2();
         switch (playerNumber){
             case 1:
-                chickenPosition.set(LouieGame.ORIGO.x + gameScreen.getCircleRadius(), LouieGame.ORIGO.y - Chicken.CHICKENSIZE);
+                chickenPosition.set(LouieGame.ORIGO.x + gameScreen.getCircleRadius() - this.getPaddle().getHitter().getWidth()/2,
+                        LouieGame.ORIGO.y - this.getPaddle().getHitter().getHeight()/2 - Chicken.CHICKENSIZE);
                 return chickenPosition;
             case 2:
-                chickenPosition.set(LouieGame.ORIGO.x + 3*Chicken.CHICKENSIZE , LouieGame.ORIGO.y + Chicken.CHICKENSIZE + gameScreen.getCircleRadius());
+                chickenPosition.set(LouieGame.ORIGO.x + this.getPaddle().getHitter().getWidth()/2 ,
+                        LouieGame.ORIGO.y + gameScreen.getCircleRadius() - this.getPaddle().getHitter().getHeight()/2);
                 return chickenPosition;
             case 3:
-                chickenPosition.set(LouieGame.ORIGO.x  - gameScreen.getCircleRadius(), LouieGame.ORIGO.y + 3*Chicken.CHICKENSIZE);
+                chickenPosition.set(LouieGame.ORIGO.x  - gameScreen.getCircleRadius() - this.getPaddle().getHitter().getWidth()/2,
+                        LouieGame.ORIGO.y + this.getPaddle().getHitter().getHeight()/2);
                 return chickenPosition;
             case 4:
-                chickenPosition.set(LouieGame.ORIGO.x  - Chicken.CHICKENSIZE, LouieGame.ORIGO.y  - gameScreen.getCircleRadius() + Chicken.CHICKENSIZE);
+                chickenPosition.set(LouieGame.ORIGO.x  - this.getPaddle().getHitter().getWidth()/2 - Chicken.CHICKENSIZE
+                        , LouieGame.ORIGO.y  - gameScreen.getCircleRadius() - this.getPaddle().getHitter().getHeight()/2);
                 return chickenPosition;
             default:
                 return null;

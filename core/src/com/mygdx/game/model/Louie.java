@@ -22,51 +22,55 @@ public class Louie {
 
     private Sprite sprite;
     private Vector2 origin;
-
+    private Center center;
     private PlaneArm arm;
-    public static float MAXHEIGHT;
 
 
+private float currentCircleRadius;
 
 
-    private float moveSpeed;
-    private float staticCircleRadius, currentCircleRadius;
-    private double angle;
     private boolean airborne;
+    private double angle;
 
-    public Louie(int circleRadius, GameScreen gameScreen) {
 
-        this.staticCircleRadius = circleRadius;
+    public Louie(Center center, float startAngle) {
+        this.center = center;
 
-        //TODO: SET GOOD NUMBER
-        MAXHEIGHT = (staticCircleRadius) /80f;
-        moveSpeed = -1;
-        angle = 0;
-
+        angle = startAngle;
 
         sprite = new Sprite(new Texture(Gdx.files.internal("images/louie.png")));
 
         sprite.setX(LouieGame.WIDTH / 2 );
         sprite.setY(LouieGame.HEIGHT / 2);
-        origin = new Vector2(LouieGame.WIDTH / 2, LouieGame.HEIGHT / 2);
-
         arm = new PlaneArm(this);
 
         //RANDOMIZE START
         Random r = new Random();
         float randomTime = r.nextFloat() * (20 - 3) + 3;
         sprite.setScale(3);
-        Tween.to(sprite, SpriteAccessor.SCALE, randomTime).target(1f).start(gameScreen.getTweenManager());
+        getPlaneArm().getSprite().setScale(getPlaneArm().getSprite().getScaleX(),2);
 
+        Tween armTween = Tween.to(getPlaneArm().getSprite(),SpriteAccessor.SCALEY, randomTime).target(1f);
+        Tween spriteTween = Tween.to(sprite, SpriteAccessor.SCALE, randomTime).target(1f);
+        Timeline.createParallel().push(armTween).push(spriteTween).start(center.getGameScreen().getTweenManager());
     }
 
     public void update(float deltaTime) {
-        currentCircleRadius = staticCircleRadius /sprite.getScaleX();
-        angle = angle + moveSpeed * deltaTime;
-        sprite.setX(origin.x + (float) (currentCircleRadius * Math.cos(angle)));
-        sprite.setY(origin.y + (float) (currentCircleRadius * Math.sin(angle)));
+        /** TODO : MAYBE INCLUDE MOVESPEED ACCELERATION
+        totalTime += delta;
+        if (totalTime > 1) {
+            louie.setMoveSpeed(louie.getMoveSpeed() + (louie.getMoveSpeed() * 0.01f));
+            totalTime = 0;
+        }
+        */
+        currentCircleRadius = (center.getStaticCircleRadius() /sprite.getScaleX());
+        angle = angle + center.getMoveSpeed() * deltaTime;
+        sprite.setX(LouieGame.ORIGO.x + (float) (currentCircleRadius * Math.cos(angle)) - sprite.getWidth()/2);
+        sprite.setY(LouieGame.ORIGO.y + (float) (currentCircleRadius * Math.sin(angle)) - sprite.getHeight()/2);
 
         sprite.setRotation((float) Math.toDegrees(angle));
+
+        arm.update(deltaTime);
 
     }
 
@@ -82,13 +86,14 @@ public class Louie {
     public boolean hit(float maxheight, TweenManager tweenManager) {
         // TODO: FIX MATH FOR MAXHEIGHT
         if (!airborne) {
-            Tween scaleSpriteTween = Tween.to(sprite, SpriteAccessor.SCALE, maxheight/2).target(maxheight).repeatYoyo(1, 0).setCallback(new TweenCallback() {
+            Tween scaleSpriteTween = Tween.to(sprite, SpriteAccessor.SCALE, maxheight / 2).target(maxheight).repeatYoyo(1, 0).setCallback(new TweenCallback() {
                 @Override
                 public void onEvent(int i, BaseTween<?> baseTween) {
                     airborne = false;
-                                  }
+                }
             });
-            Timeline.createParallel().push(scaleSpriteTween).start(tweenManager);
+            Tween scaleArmTween = Tween.to(getPlaneArm().getSprite(),SpriteAccessor.SCALEY, maxheight/2).target(maxheight).repeatYoyo(1,0);
+            Timeline.createParallel().push(scaleSpriteTween).push(scaleArmTween).start(tweenManager);
             airborne = true;
             return true;
         }
@@ -105,12 +110,25 @@ public class Louie {
         return airborne;
     }
 
-    public float getMoveSpeed() {
-        return moveSpeed;
+
+    public double getAngle() {
+        return angle;
     }
 
-    public void setMoveSpeed(float moveSpeed) {
-        this.moveSpeed = moveSpeed;
+    public Vector2 getPosition() {
+        return new Vector2(sprite.getX(),sprite.getY());
     }
 
+
+    public PlaneArm getPlaneArm() {
+        return arm;
+    }
+
+    public Center getCenter() {
+        return center;
+    }
+
+    public float getCurrentCircleRadius() {
+        return currentCircleRadius;
+    }
 }

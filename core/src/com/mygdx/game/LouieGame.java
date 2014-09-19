@@ -39,13 +39,13 @@ public class LouieGame extends Game {
         players = new ArrayList<Player>();
         Tween.registerAccessor(Sprite.class,new SpriteAccessor());
 
-        chickenSound = Gdx.audio.newSound(Gdx.files.internal("sounds/chicken.wav"));
+        //chickenSound = Gdx.audio.newSound(Gdx.files.internal("sounds/chicken.wav"));
         this.FONT = new BitmapFont();
         this.WIDTH = Gdx.graphics.getWidth();
         this.HEIGHT = Gdx.graphics.getHeight();
 
         ORIGO = new Vector2(WIDTH/2,HEIGHT/2);
-        GameScreen gameScreen= new GameScreen(this, players);
+        GameScreen gameScreen= new GameScreen(this, players, 1);
         players.add(new Player( gameScreen,1));
         players.add(new Player( gameScreen,2));
         players.add(new Player( gameScreen,3));

@@ -13,6 +13,7 @@ public class SpriteAccessor implements TweenAccessor<Sprite> {
     public static final int POSITION_Y = 3;
     public static final int POSITION_XY = 4;
     public static final int ROTATION = 5;
+    public static final int SCALEY = 6;
 
     @Override
     public int getValues(Sprite sprite, int tweenType, float[] returnValues) {
@@ -26,6 +27,7 @@ public class SpriteAccessor implements TweenAccessor<Sprite> {
                 return 2;
             case ROTATION:
                 returnValues[0] = sprite.getRotation(); return 1;
+            case SCALEY: returnValues[0] = sprite.getScaleY(); return 1;
             default: assert false; return -1;
         }
     }
@@ -49,6 +51,8 @@ public class SpriteAccessor implements TweenAccessor<Sprite> {
             case ROTATION:
                 sprite.setRotation(newValues[0]);
                 break;
+            case SCALEY:
+                sprite.setScale(sprite.getScaleX(),newValues[0]);
             default:
                 assert false;
                 break;
