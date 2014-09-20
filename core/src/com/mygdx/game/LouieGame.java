@@ -10,8 +10,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Player;
+import com.mygdx.game.network.GameClient;
 import com.mygdx.game.tween.SpriteAccessor;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class LouieGame extends Game {
@@ -50,8 +52,8 @@ public class LouieGame extends Game {
 
         this.setScreen(new ConfigGameScreen(new LoggedInUser("Tomas"), this));
 
-/**
-        ArrayList<Player> p = new ArrayList<Player>();
+
+      /*  ArrayList<Player> p = new ArrayList<Player>();
         p.add(new Player(1));
         p.add(new Player(2));
         p.add(new Player(3));
@@ -59,8 +61,11 @@ public class LouieGame extends Game {
         GameSettings g = new GameSettings();
         g.setNumberOfLouies(2);
         g.setNumberOfChickens(10);
-        this.setScreen(new ConfigGameScreen(this,p,g));
-        */
+        try {
+            this.setScreen(new GameScreen(this,p,g, new GameClient(new LoggedInUser("Tomas"), this)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
 
 
     }
