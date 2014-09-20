@@ -3,9 +3,7 @@ package com.mygdx.game.network;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import com.mygdx.game.GameScreen;
-import com.mygdx.game.LoggedInUser;
-import com.mygdx.game.LouieGame;
+import com.mygdx.game.*;
 import com.mygdx.game.model.Player;
 
 import java.io.IOException;
@@ -74,7 +72,7 @@ public class GameClient {
         if(player.getPlayerNumber() != responsePlayer.getPlayerNumber()){
             GameScreen screen = (GameScreen) game.getScreen();
             screen.hitPlayer(responsePlayer.getPlayerNumber());
-        }
+       }
     }
 
     public void sendAddPlayerRequest(Connection connection) {
@@ -90,11 +88,26 @@ public class GameClient {
     }
 
     private void startGame(StartGameResponse startGameResponse) {
-        game.setScreen(new GameScreen(game, startGameResponse.getPlayers(), startGameResponse.getSettings()));
+        ConfigGameScreen screen = (ConfigGameScreen) game.getScreen();
+        screen.setStartGame(true, startGameResponse.getPlayers(),startGameResponse.getSettings(), player);
+
     }
 
 
     public Client getClient() {
         return client;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void sendStartGameRequest(GameSettings settings){
+        if(this.getClient().isConnected()){
+            StartGameRequest startGameRequest = new StartGameRequest();
+            startGameRequest.setGameSettings(settings);
+            startGameRequest.setPlayer(this.getPlayer());
+            this.getClient().sendTCP(startGameRequest);
+        }
     }
 }

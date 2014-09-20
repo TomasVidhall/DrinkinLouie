@@ -4,6 +4,7 @@ import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.mygdx.game.model.paddles.Paddle;
+import com.mygdx.game.network.GameClient;
 
 
 /**
@@ -26,7 +27,9 @@ public class GameInput extends InputAdapter {
     public boolean keyDown(int keycode) {
         if(LouieGame.platform.equals("desktop")) {
             if (keycode == Input.Keys.SPACE) {
+
                 myPaddle.hit(tweenManager, gameScreen);
+                gameScreen.getGameClient().sendHitRequest();
             }
         }
         return true;

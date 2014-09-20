@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by Administratör on 2014-09-16.
  */
-public class Player {
+public class Player implements Comparable<Player>{
     private Paddle paddle;
 
 
@@ -160,5 +160,15 @@ public class Player {
 
         }
         timeline.start(tweenManager);
+    }
+
+    @Override
+    public int compareTo(Player o) {
+        if(this.getPlayerNumber() > o.getPlayerNumber())
+            return 1;
+        if(this.getPlayerNumber() < o.getPlayerNumber())
+            return -1;
+        else
+            return 0;
     }
 }

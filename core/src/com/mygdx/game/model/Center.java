@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.GameScreen;
+import com.mygdx.game.GameSettings;
 import com.mygdx.game.LouieGame;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class Center {
 
     private List<Louie> louies;
 
-    public Center(float circleRadius, GameScreen gameScreen, int numberOfLouies){
+    public Center(float circleRadius, GameScreen gameScreen, GameSettings settings){
         sprite = new Sprite(new Texture(Gdx.files.internal("images/center.png")));
         sprite.scale(1);
         sprite.setPosition(LouieGame.ORIGO.x - sprite.getWidth()/2,LouieGame.ORIGO.y - sprite.getHeight()/2);
@@ -39,8 +40,8 @@ public class Center {
 
         louies = new ArrayList<Louie>();
 
-        for (int i = 0; i < numberOfLouies ; i++) {
-            louies.add(new Louie(this, (float) (i*2*Math.PI/numberOfLouies)));
+        for (int i = 0; i < settings.getNumberOfLouies() ; i++) {
+            louies.add(new Louie(this, (float) (i*2*Math.PI/settings.getNumberOfLouies()), settings.getRandomTimes().get(i)));
         }
 
 

@@ -48,9 +48,9 @@ public class LouieGame extends Game {
         ORIGO = new Vector2(WIDTH / 2, HEIGHT / 2);
 
 
-        //this.setScreen(new ConfigGameScreen(new LoggedInUser("Tomas"), this));
+        this.setScreen(new ConfigGameScreen(new LoggedInUser("Tomas"), this));
 
-
+/**
         ArrayList<Player> p = new ArrayList<Player>();
         p.add(new Player(1));
         p.add(new Player(2));
@@ -59,7 +59,8 @@ public class LouieGame extends Game {
         GameSettings g = new GameSettings();
         g.setNumberOfLouies(2);
         g.setNumberOfChickens(10);
-        this.setScreen(new GameScreen(this,p,g));
+        this.setScreen(new ConfigGameScreen(this,p,g));
+        */
 
 
     }

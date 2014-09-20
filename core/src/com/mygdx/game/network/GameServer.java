@@ -1,7 +1,6 @@
 package com.mygdx.game.network;
 
 
-import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
@@ -37,10 +36,9 @@ public class GameServer {
             public void received(Connection connection, Object o) {
 
 
-
-                if(o instanceof HitRequest){
+                if (o instanceof HitRequest) {
                     HitRequest request = (HitRequest) o;
-                    Player p  = request.getPlayer();
+                    Player p = request.getPlayer();
 
 
                     HitResponse r = new HitResponse();
@@ -48,17 +46,17 @@ public class GameServer {
                     //connection.sendTCP(r);
                     server.sendToAllTCP(r);
                 }
-                if( o instanceof AddPlayerRequest){
+                if (o instanceof AddPlayerRequest) {
                     AddPlayerRequest addPlayerRequest = (AddPlayerRequest) o;
 
 
-
-                    Player p = new Player(players.size()+1);
-                    players.add(p);
+                    Player p = new Player(players.size() + 1);
                     //ADD PLAYER IF NEEDED
-                    if(players.size() == 0){
+                    if (players.size() == 0) {
                         leader = p;
                     }
+
+                    players.add(p);
                     AddPlayerResponse pr = new AddPlayerResponse();
                     pr.setText("Added player " + p.getPlayerNumber());
                     pr.setPlayer(p);
@@ -66,16 +64,21 @@ public class GameServer {
 
                 }
 
-                if(o instanceof StartGameRequest){
+                if (o instanceof StartGameRequest) {
 
                     StartGameRequest sgr = (StartGameRequest) o;
-                    if(sgr.getPlayer().equals(leader)) {
-                        StartGameResponse response = new StartGameResponse();
+                    //if(sgr.getPlayer().equals(leader)) {
+                    StartGameResponse response = new StartGameResponse();
 
-                        response.setPlayers(players);
-                        response.setSettings(gameSettings);
-                        server.sendToAllTCP(response);
-                    }
+                    gameSettings = new GameSettings();
+                    gameSettings.setNumberOfLouies(2);
+                    gameSettings.setNumberOfChickens(5);
+                    response.setPlayers(players);
+                    response.setSettings(gameSettings);
+
+
+                    server.sendToAllTCP(response);
+                    //  }
                 }
 
 
@@ -83,7 +86,7 @@ public class GameServer {
 
             @Override
             public void connected(Connection connection) {
-             //   Client c = (Client) connection.getEndPoint();
+                //   Client c = (Client) connection.getEndPoint();
                 System.out.println("CONNECTED");
 
 
@@ -94,15 +97,14 @@ public class GameServer {
                 checkConnectedPlayers();
             }
         });
-        server.bind(Network.TCPPORT,Network.UDPPORT);
+        server.bind(Network.TCPPORT, Network.UDPPORT);
         server.start();
-
 
 
     }
 
     private void checkConnectedPlayers() {
-        for (Player p : players){
+        for (Player p : players) {
 
         }
     }

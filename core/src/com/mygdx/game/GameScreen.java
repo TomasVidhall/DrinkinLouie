@@ -12,6 +12,7 @@ import com.mygdx.game.model.Center;
 import com.mygdx.game.model.Chicken;
 import com.mygdx.game.model.Louie;
 import com.mygdx.game.model.Player;
+import com.mygdx.game.network.GameClient;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import java.util.List;
  */
 public class GameScreen implements Screen {
     private final LouieGame game;
+    private final GameClient gameClient;
     private GameSettings settings;
     private SpriteBatch spriteBatch;
     private ShapeRenderer shapeRenderer;
@@ -31,15 +33,19 @@ public class GameScreen implements Screen {
     public static boolean debug = false;
     private float totalTime = 0;
     private Center center;
+    private Player clientPlayer;
 
 
-    public GameScreen(LouieGame game, List<Player> players, GameSettings gameSettings) {
+    public GameScreen(LouieGame game, List<Player> players, GameSettings gameSettings, GameClient gameClient) {
         tweenManager = new TweenManager();
         this.game = game;
         circleRadius = 250;
         this.players = players;
         this.settings = gameSettings;
-        center = new Center(circleRadius, this, gameSettings.getNumberOfLouies());
+        center = new Center(circleRadius, this, gameSettings);
+        this.gameClient = gameClient;
+        this.clientPlayer = players.get(gameClient.getPlayer().getPlayerNumber()-1);
+
     }
 
     @Override
@@ -51,7 +57,7 @@ public class GameScreen implements Screen {
         decidePlayerPositions();
         spawnChickens();
 
-        input = new GameInput(players.get(0).getPaddle(), tweenManager, this);
+        input = new GameInput(clientPlayer.getPaddle(), tweenManager, this);
         Gdx.input.setInputProcessor(input);
 
 
@@ -171,6 +177,11 @@ public class GameScreen implements Screen {
     }
 
     public void hitPlayer(int playerNumber) {
-        System.out.println("HIT BY PLAYER " + playerNumber);
+        Player p = players.get(playerNumber-1);
+        p.getPaddle().hit(tweenManager,this);
+    }
+
+    public GameClient getGameClient() {
+        return gameClient;
     }
 }

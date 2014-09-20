@@ -33,7 +33,7 @@ private float currentCircleRadius;
     private double angle;
 
 
-    public Louie(Center center, float startAngle) {
+    public Louie(Center center, float startAngle, Float randomTime) {
         this.center = center;
 
         angle = startAngle;
@@ -45,8 +45,7 @@ private float currentCircleRadius;
         arm = new PlaneArm(this);
 
         //RANDOMIZE START
-        Random r = new Random();
-        float randomTime = r.nextFloat() * (20 - 3) + 3;
+
         sprite.setScale(3);
         getPlaneArm().getSprite().setScale(getPlaneArm().getSprite().getScaleX(),2);
 
