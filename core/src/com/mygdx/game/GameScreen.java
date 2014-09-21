@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import aurelienribon.tweenengine.TweenManager;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,7 +13,6 @@ import com.mygdx.game.model.Louie;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.network.GameClient;
 
-import java.awt.*;
 import java.util.List;
 
 /**
@@ -35,6 +33,7 @@ public class GameScreen implements Screen {
     private float totalTime = 0;
     private Center center;
     private Player clientPlayer;
+    private CountDown countDown;
 
 
     public GameScreen(LouieGame game, List<Player> players, GameSettings gameSettings, GameClient gameClient) {
@@ -45,7 +44,8 @@ public class GameScreen implements Screen {
         this.settings = gameSettings;
         center = new Center(circleRadius, this, gameSettings);
         this.gameClient = gameClient;
-        this.clientPlayer = players.get(gameClient.getPlayer().getPlayerNumber()-1);
+        this.clientPlayer = players.get(gameClient.getPlayer().getPlayerNumber() - 1);
+        this.countDown = new CountDown(tweenManager);
 
     }
 
@@ -62,19 +62,17 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(input);
 
 
-
-
     }
 
     private void spawnChickens() {
-        for(Player p: players){
+        for (Player p : players) {
             p.spawnChickens(settings.getNumberOfChickens());
         }
     }
 
     private void decidePlayerPositions() {
         for (Player p : players) {
-            p.initPositions(p.getPlayerNumber(),this);
+            p.initPositions(p.getPlayerNumber(), this);
         }
 
     }
@@ -82,18 +80,21 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(255, 255, 255, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if (!countDown.isDone()) {
+            countDown.update(delta);
+        }
 
         update(delta);
-
-
-        Gdx.gl.glClearColor(255,255,255,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         spriteBatch.begin();
         for (Player p : players) {
             p.render(spriteBatch);
         }
         center.render(spriteBatch);
+        if (!countDown.isDone()) {
+            countDown.render(spriteBatch);
+        }
         spriteBatch.end();
 
         if (debug) {
@@ -178,8 +179,8 @@ public class GameScreen implements Screen {
     }
 
     public void hitPlayer(int playerNumber) {
-        Player p = players.get(playerNumber-1);
-        p.getPaddle().hit(tweenManager,this);
+        Player p = players.get(playerNumber - 1);
+        p.getPaddle().hit(tweenManager, this);
     }
 
     public GameClient getGameClient() {

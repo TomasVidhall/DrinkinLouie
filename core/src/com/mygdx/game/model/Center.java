@@ -45,6 +45,7 @@ public class Center {
         }
 
 
+
     }
     public void update(float delta){
         angle = angle + moveSpeed * delta;
