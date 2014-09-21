@@ -71,7 +71,8 @@ public class ConfigGameScreen implements Screen {
             e.printStackTrace();
         }
         settings = new GameSettings();
-        settings.setNumberOfLouies(2);
+        settings.setNumberOfLouies(1);
+        settings.setNumberOfChickens(3);
 
 
         stage = new Stage();
@@ -81,7 +82,7 @@ public class ConfigGameScreen implements Screen {
 
         atlas = new TextureAtlas("ui/atlas.pack");
         skin = new Skin(Gdx.files.internal("ui/menuSkin.json"), atlas);
-        startGameButton = new TextButton("12", skin);
+        startGameButton = new TextButton("1", skin);
 
         startGameButton.addListener(new ClickListener(){
             @Override
