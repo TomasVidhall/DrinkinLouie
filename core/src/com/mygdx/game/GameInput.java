@@ -39,6 +39,7 @@ public class GameInput extends InputAdapter {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if(LouieGame.platform.equals("android")){
             myPaddle.hit(tweenManager, gameScreen);
+            gameScreen.getGameClient().sendHitRequest();
         }
 
         return super.touchDown(screenX, screenY, pointer, button);

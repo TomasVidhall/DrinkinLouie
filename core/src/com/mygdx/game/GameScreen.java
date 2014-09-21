@@ -14,6 +14,7 @@ import com.mygdx.game.model.Louie;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.network.GameClient;
 
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -85,7 +86,7 @@ public class GameScreen implements Screen {
         update(delta);
 
 
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(255,255,255,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         spriteBatch.begin();
