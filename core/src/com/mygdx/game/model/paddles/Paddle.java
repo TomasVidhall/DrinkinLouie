@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.GameScreen;
+import com.mygdx.game.GameSettings;
+import com.mygdx.game.network.ServerGame;
 import com.mygdx.game.tween.SpriteAccessor;
 
 
@@ -31,12 +33,12 @@ public abstract class Paddle {
 
     }
 
-    public boolean hit(final TweenManager tweenManager, final GameScreen gameScreen) {
+    public boolean hit(final TweenManager tweenManager, final ServerGame serverGame) {
         if (!airborne) {
             Tween handleTween = Tween.to(handle, SpriteAccessor.SCALE, riseTime).target(0.5f).setCallback(new TweenCallback() {
                 @Override
                 public void onEvent(int i, BaseTween<?> baseTween) {
-                    checkHit(gameScreen);
+                    checkHit(serverGame);
                     Tween handleTween = Tween.to(handle, SpriteAccessor.SCALE, cooldown).target(1f).setCallback(new TweenCallback() {
                         @Override
                         public void onEvent(int i, BaseTween<?> baseTween) {
@@ -61,8 +63,8 @@ public abstract class Paddle {
 
     }
 
-    private void checkHit(GameScreen gameScreen) {
-        gameScreen.checkPaddleHit(this.hitter.getBoundingRectangle());
+    private void checkHit(ServerGame serverGame) {
+        serverGame.checkPaddleHit(this.hitter.getBoundingRectangle());
     }
 
 
@@ -77,7 +79,7 @@ public abstract class Paddle {
         return hitter.getBoundingRectangle();
     }
 
-    public abstract void setPositions(GameScreen gameScreen);
+    public abstract void setPositions(GameSettings gameScreen);
 
 
     public Sprite getHandle() {

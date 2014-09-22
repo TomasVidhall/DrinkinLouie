@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameScreen;
+import com.mygdx.game.GameSettings;
 import com.mygdx.game.LouieGame;
 import com.mygdx.game.model.paddles.Paddle;
 import com.mygdx.game.model.paddles.PaddleFactory;
@@ -50,34 +51,34 @@ public class Player{
 
     }
 
-    public void initPositions(int playerNumber, GameScreen gameScreen) {
+    public void initPositions(int playerNumber, GameSettings gameSettings) {
         this.paddle = PaddleFactory.createPaddle(playerNumber, color);
-        paddle.setPositions(gameScreen);
-        initChickenPosition(playerNumber,gameScreen);
+        paddle.setPositions(gameSettings);
+        initChickenPosition(playerNumber,gameSettings);
 
     }
 
-    private void initChickenPosition(int playerNumber, GameScreen gameScreen) {
+    private void initChickenPosition(int playerNumber, GameSettings gameSettings) {
 
         switch (playerNumber){
             case 1:
-                chickenPosition.set(LouieGame.ORIGO.x + gameScreen.getCircleRadius() - this.getPaddle().getHitter().getWidth()/2,
+                chickenPosition.set(LouieGame.ORIGO.x + gameSettings.getCircleRadius() - this.getPaddle().getHitter().getWidth()/2,
                         LouieGame.ORIGO.y - this.getPaddle().getHitter().getHeight()/2 - Chicken.CHICKENSIZE);
                 break;
 
             case 2:
                 chickenPosition.set(LouieGame.ORIGO.x + this.getPaddle().getHitter().getWidth()/2 ,
-                        LouieGame.ORIGO.y + gameScreen.getCircleRadius() - this.getPaddle().getHitter().getHeight()/2);
+                        LouieGame.ORIGO.y + gameSettings.getCircleRadius() - this.getPaddle().getHitter().getHeight()/2);
                 break;
 
             case 3:
-                chickenPosition.set(LouieGame.ORIGO.x  - gameScreen.getCircleRadius() - this.getPaddle().getHitter().getWidth()/2,
+                chickenPosition.set(LouieGame.ORIGO.x  - gameSettings.getCircleRadius() - this.getPaddle().getHitter().getWidth()/2,
                         LouieGame.ORIGO.y + this.getPaddle().getHitter().getHeight()/2);
                 break;
 
             case 4:
                 chickenPosition.set(LouieGame.ORIGO.x  - this.getPaddle().getHitter().getWidth()/2 - Chicken.CHICKENSIZE
-                        , LouieGame.ORIGO.y  - gameScreen.getCircleRadius() - this.getPaddle().getHitter().getHeight()/2);
+                        , LouieGame.ORIGO.y  - gameSettings.getCircleRadius() - this.getPaddle().getHitter().getHeight()/2);
 
                 break;
 

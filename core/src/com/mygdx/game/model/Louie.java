@@ -31,13 +31,14 @@ private float currentCircleRadius;
 
     private boolean airborne;
     private double angle;
+    private float randomTime;
 
 
     public Louie(Center center, float startAngle, Float randomTime) {
         this.center = center;
 
         angle = startAngle;
-
+        this.randomTime = randomTime;
         sprite = new Sprite(new Texture(Gdx.files.internal("images/louie.png")));
 
         sprite.setX(LouieGame.WIDTH / 2 );
@@ -49,9 +50,7 @@ private float currentCircleRadius;
         sprite.setScale(3);
         getPlaneArm().getSprite().setScale(getPlaneArm().getSprite().getScaleX(),2);
 
-        Tween armTween = Tween.to(getPlaneArm().getSprite(),SpriteAccessor.SCALEY, randomTime).target(1f);
-        Tween spriteTween = Tween.to(sprite, SpriteAccessor.SCALE, randomTime).target(1f);
-        Timeline.createParallel().push(armTween).push(spriteTween).start(center.getGameScreen().getTweenManager());
+
     }
 
     public void update(float deltaTime) {
@@ -129,5 +128,13 @@ private float currentCircleRadius;
 
     public float getCurrentCircleRadius() {
         return currentCircleRadius;
+    }
+
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    public float getRandomTime() {
+        return randomTime;
     }
 }

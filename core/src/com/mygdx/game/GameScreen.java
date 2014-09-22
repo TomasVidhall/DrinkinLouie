@@ -13,7 +13,6 @@ import com.mygdx.game.model.Louie;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.network.GameClient;
 
-import java.awt.*;
 import java.util.List;
 
 /**
@@ -43,7 +42,7 @@ public class GameScreen implements Screen {
         circleRadius = 250;
         this.players = players;
         this.settings = gameSettings;
-        center = new Center(circleRadius, this, gameSettings);
+        center = new Center(gameSettings);
         this.gameClient = gameClient;
         this.clientPlayer = players.get(gameClient.getPlayer().getPlayerNumber() - 1);
         this.countDown = new CountDown(tweenManager);
@@ -59,7 +58,7 @@ public class GameScreen implements Screen {
         decidePlayerPositions();
         spawnChickens();
 
-        input = new GameInput(clientPlayer.getPaddle(), tweenManager, this);
+        input = new GameInput(gameClient);
         Gdx.input.setInputProcessor(input);
 
 
@@ -73,7 +72,7 @@ public class GameScreen implements Screen {
 
     private void decidePlayerPositions() {
         for (Player p : players) {
-            p.initPositions(p.getPlayerNumber(), this);
+            p.initPositions(p.getPlayerNumber(), settings);
         }
 
     }
@@ -181,12 +180,13 @@ public class GameScreen implements Screen {
         return tweenManager;
     }
 
-    public void hitPlayer(int playerNumber) {
-        Player p = players.get(playerNumber - 1);
-        p.getPaddle().hit(tweenManager, this);
-    }
+
 
     public GameClient getGameClient() {
         return gameClient;
+    }
+
+    public void hitPlayer(int playerNumber) {
+        System.out.println("FAIL");
     }
 }

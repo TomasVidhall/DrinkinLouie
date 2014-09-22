@@ -27,13 +27,13 @@ public class Center {
 
     private List<Louie> louies;
 
-    public Center(float circleRadius, GameScreen gameScreen, GameSettings settings){
+    public Center(GameSettings settings){
         sprite = new Sprite(new Texture(Gdx.files.internal("images/center.png")));
         sprite.scale(1);
         sprite.setPosition(LouieGame.ORIGO.x - sprite.getWidth()/2,LouieGame.ORIGO.y - sprite.getHeight()/2);
         this.gameScreen = gameScreen;
-        this.staticCircleRadius = circleRadius;
-        MAXHEIGHT = circleRadius/80f;
+        this.staticCircleRadius = settings.getCircleRadius();
+        MAXHEIGHT = settings.getCircleRadius()/80f;
         //TODO: SET GOOD NUMBER
         this.moveSpeed = -1;
         angle = 0;

@@ -11,9 +11,11 @@ public class GameSettings {
     private int numberOfLouies;
     private int numberOfChickens;
     private List<Float> randomTimes;
+    private float circleRadius;
 
     public GameSettings(){
         randomTimes = new ArrayList<Float>();
+        this.circleRadius = 250;
     }
 
     public int getNumberOfLouies() {
@@ -39,5 +41,9 @@ public class GameSettings {
 
     public List<Float> getRandomTimes() {
         return randomTimes;
+    }
+
+    public float getCircleRadius() {
+        return circleRadius;
     }
 }

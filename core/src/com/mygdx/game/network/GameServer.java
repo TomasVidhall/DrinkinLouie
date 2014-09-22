@@ -4,7 +4,9 @@ package com.mygdx.game.network;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
+import com.mygdx.game.CountDown;
 import com.mygdx.game.GameSettings;
+import com.mygdx.game.model.Center;
 import com.mygdx.game.model.Player;
 
 import javax.swing.*;
@@ -16,6 +18,7 @@ import java.util.List;
  * Created by Administratör on 2014-09-19.
  */
 public class GameServer {
+
 
     public static void main(String[] args) throws IOException {
         JFrame frame = new JFrame("SERVER");
@@ -115,5 +118,8 @@ public class GameServer {
     }
 
 
+    public void sendFrameUpdate(Center center, List<Player> players, CountDown countDown) {
+
+    }
 }
 
