@@ -1,7 +1,6 @@
 package com.mygdx.game.model.paddles;
 
 import aurelienribon.tweenengine.*;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -22,10 +21,8 @@ public abstract class Paddle {
 
     private float cooldown = 0.5f, riseTime = 0.25f;
 
-    public Paddle() {
+    public Paddle( ) {
 
-
-        this.airborne = false;
 
 
 

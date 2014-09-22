@@ -7,7 +7,6 @@ import com.esotericsoftware.kryonet.Server;
 import com.mygdx.game.GameSettings;
 import com.mygdx.game.model.Player;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +17,6 @@ import java.util.List;
 public class GameServer {
 
     public static void main(String[] args) throws IOException {
-        JFrame frame = new JFrame("SERVER");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(100,100);
-        frame.setVisible(true);
         new GameServer();
 
     }

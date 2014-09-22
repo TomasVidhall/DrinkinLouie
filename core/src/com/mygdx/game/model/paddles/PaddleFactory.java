@@ -1,7 +1,6 @@
 package com.mygdx.game.model.paddles;
 
 
-import com.badlogic.gdx.graphics.Color;
 import com.mygdx.game.GameScreen;
 
 /**
@@ -9,18 +8,18 @@ import com.mygdx.game.GameScreen;
  */
 public class PaddleFactory {
 
-    public static Paddle createPaddle(int playerNumber, Color color){
+    public static Paddle createPaddle(int playerNumber){
         switch (playerNumber){
             
             
             case 1:
-                    return new Paddle1(color);
+                    return new Paddle1();
             case 2:
-                    return new Paddle2(color);
+                    return new Paddle2();
             case 3:
-                    return new Paddle3(color);
+                    return new Paddle3();
             case 4:
-                    return new Paddle4(color);
+                    return new Paddle4();
             default:
                 return  null;
         }

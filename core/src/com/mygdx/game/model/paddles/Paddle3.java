@@ -1,7 +1,6 @@
 package com.mygdx.game.model.paddles;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.GameScreen;
@@ -12,12 +11,10 @@ import com.mygdx.game.LouieGame;
  * Created by Administratör on 2014-09-17.
  */
 public class Paddle3 extends Paddle {
-    public Paddle3(Color color ) {
+    public Paddle3( ) {
         super();
         this.setHandle(new Sprite(new Texture(Gdx.files.internal("images/handle3.png"))));
-        this.getHandle().setColor(color);
-        this.setHitter(new Sprite(new Texture(Gdx.files.internal("images/hitter13.png"))));
-        this.getHitter().setColor(color);
+        this.setHitter(new Sprite(new Texture(Gdx.files.internal("images/hitter3.png"))));
     }
 
 

@@ -4,7 +4,6 @@ import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameScreen;
@@ -21,11 +20,11 @@ import java.util.List;
 /**
  * Created by Administratör on 2014-09-16.
  */
-public class Player{
+public class Player implements Comparable<Player>{
     private Paddle paddle;
 
 
-    private Color color;
+
     private int playerNumber;
     private float angle;
     private Vector2 chickenPosition;
@@ -35,23 +34,18 @@ public class Player{
 
     }
 
-    public Player(int playerNumber){
-
-        this(playerNumber,Color.RED);
-    }
-
-    public Player(int playerNumber, Color color) {
+    public Player(int playerNumber) {
 
 
         this.chickens = new ArrayList<Chicken>();
         this.playerNumber = playerNumber;
         this.chickenPosition = new Vector2();
-        this.color = color;
+
 
     }
 
     public void initPositions(int playerNumber, GameScreen gameScreen) {
-        this.paddle = PaddleFactory.createPaddle(playerNumber, color);
+        this.paddle = PaddleFactory.createPaddle(playerNumber);
         paddle.setPositions(gameScreen);
         initChickenPosition(playerNumber,gameScreen);
 
@@ -147,6 +141,7 @@ public class Player{
             switch (playerNumber){
                 case 1:
                     timeline.push(Tween.to(c.getSprite(), SpriteAccessor.POSITION_X,1).target(chickenPosition.x + i* Chicken.CHICKENSIZE));
+
                     break;
                 case 2:
                     timeline.push(Tween.to(c.getSprite(),SpriteAccessor.POSITION_Y,1).target(chickenPosition.y + i*Chicken.CHICKENSIZE));
@@ -167,5 +162,13 @@ public class Player{
         timeline.start(tweenManager);
     }
 
-
+    @Override
+    public int compareTo(Player o) {
+        if(this.getPlayerNumber() > o.getPlayerNumber())
+            return 1;
+        if(this.getPlayerNumber() < o.getPlayerNumber())
+            return -1;
+        else
+            return 0;
+    }
 }
