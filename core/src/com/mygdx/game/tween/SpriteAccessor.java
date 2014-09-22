@@ -15,6 +15,7 @@ public class SpriteAccessor implements TweenAccessor<Sprite> {
     public static final int ROTATION = 5;
     public static final int SCALEY = 6;
 
+
     @Override
     public int getValues(Sprite sprite, int tweenType, float[] returnValues) {
         switch (tweenType){

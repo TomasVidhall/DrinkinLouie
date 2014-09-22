@@ -21,4 +21,8 @@ public class StartGameRequest {
     public void setPlayer(Player player) {
         this.player = player;
     }
+
+    public GameSettings getGameSettings() {
+        return gameSettings;
+    }
 }
