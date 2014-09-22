@@ -70,7 +70,9 @@ public class GameServer {
                     //if(sgr.getPlayer().equals(leader)) {
                     StartGameResponse response = new StartGameResponse();
 
-                    gameSettings = sgr.getGameSettings();
+                    gameSettings = new GameSettings();
+                    gameSettings.setNumberOfLouies(2);
+                    gameSettings.setNumberOfChickens(5);
                     response.setPlayers(players);
                     response.setSettings(gameSettings);
 
