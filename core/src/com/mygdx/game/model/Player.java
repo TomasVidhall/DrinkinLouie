@@ -169,4 +169,9 @@ public class Player{
     }
 
 
+
+
+    public void setUpSpriteTextures() {
+        paddle.setUpSpriteTextures();
+    }
 }

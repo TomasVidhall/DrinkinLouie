@@ -1,6 +1,11 @@
 package com.mygdx.game.network;
 
 
+import com.badlogic.gdx.ApplicationListener;
+
+
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
@@ -12,19 +17,22 @@ import com.mygdx.game.model.Player;
 import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by Administratör on 2014-09-19.
  */
-public class GameServer {
+public class GameServer implements ApplicationListener {
 
 
     public static void main(String[] args) throws IOException {
-        JFrame frame = new JFrame("SERVER");
+      JFrame frame = new JFrame("SERVER");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(100,100);
         frame.setVisible(true);
+
+
         new GameServer();
 
     }
@@ -75,17 +83,23 @@ public class GameServer {
                 if (o instanceof StartGameRequest) {
 
                     StartGameRequest sgr = (StartGameRequest) o;
-                    //if(sgr.getPlayer().equals(leader)) {
-                    StartGameResponse response = new StartGameResponse();
 
                     gameSettings = new GameSettings();
                     gameSettings.setNumberOfLouies(2);
                     gameSettings.setNumberOfChickens(5);
+                    startServerGame(players,gameSettings);
+                    //if(sgr.getPlayer().equals(leader)) {
+                    StartGameResponse response = new StartGameResponse();
+
+
+
                     response.setPlayers(players);
                     response.setSettings(gameSettings);
 
 
                     server.sendToAllTCP(response);
+
+
                     //  }
                 }
 
@@ -111,6 +125,11 @@ public class GameServer {
 
     }
 
+    private void startServerGame(List<Player> players, GameSettings gameSettings) {
+        ServerGame serverGame = new ServerGame(players,gameSettings, this);
+        serverGame.start();
+    }
+
     private void checkConnectedPlayers() {
         for (Player p : players) {
 
@@ -119,6 +138,36 @@ public class GameServer {
 
 
     public void sendFrameUpdate(Center center, List<Player> players, CountDown countDown) {
+
+    }
+
+    @Override
+    public void create() {
+
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void render() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void dispose() {
 
     }
 }

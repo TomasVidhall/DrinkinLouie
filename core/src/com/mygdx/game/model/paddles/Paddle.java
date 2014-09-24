@@ -98,4 +98,5 @@ public abstract class Paddle {
         this.handle = handle;
     }
 
+    public abstract void setUpSpriteTextures();
 }

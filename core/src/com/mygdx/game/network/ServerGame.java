@@ -3,7 +3,10 @@ package com.mygdx.game.network;
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.CountDown;
 import com.mygdx.game.GameSettings;
 import com.mygdx.game.ShapeFunctions;
@@ -13,12 +16,15 @@ import com.mygdx.game.model.Louie;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.tween.SpriteAccessor;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by Administratör on 2014-09-22.
  */
 public class ServerGame {
+
+    public static Vector2 ORIGO;
     private final List<Player> players;
     private final GameSettings settings;
     private final Center center;
@@ -30,12 +36,16 @@ public class ServerGame {
     private GameServer server;
 
     public ServerGame(List<Player> players, GameSettings gameSettings, GameServer server) {
+        ORIGO = new Vector2(1280/2,720/2);
         this.players = players;
         this.settings = gameSettings;
         center = new Center(gameSettings);
         this.tweenManager = new TweenManager();
         this.countDown = new CountDown(tweenManager);
         this.server = server;
+
+
+
 
     }
 
@@ -65,7 +75,7 @@ public class ServerGame {
         for(Louie l: center.getLouies()){
             Tween armTween = Tween.to(l.getPlaneArm().getSprite(), SpriteAccessor.SCALEY, l.getRandomTime()).target(1f);
             Tween spriteTween = Tween.to(l.getSprite(), SpriteAccessor.SCALE, l.getRandomTime()).target(1f);
-            Timeline.createParallel().push(armTween).push(spriteTween).start(center.getGameScreen().getTweenManager());
+            Timeline.createParallel().push(armTween).push(spriteTween).start(tweenManager);
         }
 
     }

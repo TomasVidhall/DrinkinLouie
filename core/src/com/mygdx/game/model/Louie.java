@@ -39,7 +39,7 @@ private float currentCircleRadius;
 
         angle = startAngle;
         this.randomTime = randomTime;
-        sprite = new Sprite(new Texture(Gdx.files.internal("images/louie.png")));
+        sprite = new Sprite();
 
         sprite.setX(LouieGame.WIDTH / 2 );
         sprite.setY(LouieGame.HEIGHT / 2);
@@ -136,5 +136,18 @@ private float currentCircleRadius;
 
     public float getRandomTime() {
         return randomTime;
+    }
+
+    public void setCurrentCircleRadius(float currentCircleRadius) {
+        this.currentCircleRadius = currentCircleRadius;
+    }
+
+    public void setAirborne(boolean airborne) {
+        this.airborne = airborne;
+    }
+
+    public void setSpriteTexture(){
+        sprite.setTexture(new Texture(Gdx.files.internal("images/louie.png")));
+        getPlaneArm().setSpriteTexture();
     }
 }

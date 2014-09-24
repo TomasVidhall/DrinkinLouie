@@ -13,9 +13,9 @@ import com.mygdx.game.LouieGame;
 public class Paddle4 extends Paddle {
     public Paddle4(Color color) {
         super();
-        this.setHandle(new Sprite(new Texture(Gdx.files.internal("images/handle4.png"))));
+        this.setHandle(new Sprite());
         this.getHandle().setColor(color);
-        this.setHitter(new Sprite(new Texture(Gdx.files.internal("images/hitter24.png"))));
+        this.setHitter(new Sprite());
         this.getHitter().setColor(color);
     }
 
@@ -28,5 +28,11 @@ public class Paddle4 extends Paddle {
 
         getHitter().setPosition((int) (LouieGame.ORIGO.x - getHitter().getWidth()/2),
                 (int) (LouieGame.ORIGO.y) - gameScreen.getCircleRadius() - getHitter().getHeight()/2 );
+    }
+
+    @Override
+    public void setUpSpriteTextures() {
+        this.getHandle().setTexture(new Texture(Gdx.files.internal("images/handle4.png")));
+        this.getHitter().setTexture(new Texture(Gdx.files.internal("images/hitter24.png")));
     }
 }

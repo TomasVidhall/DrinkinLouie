@@ -23,8 +23,8 @@ public class CountDown {
     public CountDown(TweenManager manager){
         this.done = false;
         this.number = 3;
-        this.sprite = new Sprite(new Texture(Gdx.files.internal("images/countdown/3.png")));
-        setUpSprite();
+        this.sprite = new Sprite();
+
         sprite.setPosition(LouieGame.WIDTH/2 - sprite.getWidth()/2, LouieGame.HEIGHT/2 - sprite.getHeight()/2);
         this.manager = manager;
 

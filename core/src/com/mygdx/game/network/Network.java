@@ -33,6 +33,9 @@ public class Network {
         kryo.register(com.badlogic.gdx.math.Vector2.class);
         kryo.register(com.mygdx.game.GameSettings.class);
         kryo.register(com.badlogic.gdx.graphics.Color.class);
+
+
+
     }
 
 }

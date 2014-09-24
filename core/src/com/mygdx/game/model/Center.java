@@ -1,14 +1,22 @@
 package com.mygdx.game.model;
 
+
+
+
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.esotericsoftware.kryonet.Server;
 import com.mygdx.game.GameScreen;
 import com.mygdx.game.GameSettings;
 import com.mygdx.game.LouieGame;
+import com.mygdx.game.network.ServerGame;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -23,15 +31,16 @@ public class Center {
     private float staticCircleRadius;
     private float angle;
 
-    private GameScreen gameScreen;
+
 
     private List<Louie> louies;
 
     public Center(GameSettings settings){
-        sprite = new Sprite(new Texture(Gdx.files.internal("images/center.png")));
+
+        sprite = new Sprite();
         sprite.scale(1);
-        sprite.setPosition(LouieGame.ORIGO.x - sprite.getWidth()/2,LouieGame.ORIGO.y - sprite.getHeight()/2);
-        this.gameScreen = gameScreen;
+       // sprite.setPosition(ServerGame.ORIGO.x - sprite.getWidth()/2,ServerGame.ORIGO.y - sprite.getHeight()/2);
+
         this.staticCircleRadius = settings.getCircleRadius();
         MAXHEIGHT = settings.getCircleRadius()/80f;
         //TODO: SET GOOD NUMBER
@@ -73,9 +82,6 @@ public class Center {
 
 
 
-    public GameScreen getGameScreen() {
-        return gameScreen;
-    }
 
     public List<Louie> getLouies() {
         return louies;
@@ -84,5 +90,25 @@ public class Center {
 
     public float getMoveSpeed() {
         return moveSpeed;
+    }
+
+    public float getAngle() {
+        return angle;
+    }
+
+    public void setAngle(float angle) {
+        this.angle = angle;
+    }
+
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    public void setSpriteTexture(){
+        sprite.setTexture(new Texture(Gdx.files.internal("images/center.png")));
+        for (Louie louie : louies){
+            louie.setSpriteTexture();
+        }
+
     }
 }

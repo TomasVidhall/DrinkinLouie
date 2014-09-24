@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.LouieGame;
+import com.mygdx.game.network.ServerGame;
 
 /**
  * Created by Administratör on 2014-09-17.
@@ -16,9 +17,9 @@ public class PlaneArm {
 
     public PlaneArm(Louie louie) {
         this.louie = louie;
-        sprite = new Sprite(new Texture(Gdx.files.internal("images/armpixel.png")));
+        sprite = new Sprite();
         sprite.setSize(louie.getCenter().getStaticCircleRadius(), PlaneArm.HEIGHT);
-        sprite.setPosition(LouieGame.ORIGO.x,LouieGame.ORIGO.y-sprite.getHeight()/2);
+        sprite.setPosition(ServerGame.ORIGO.x,ServerGame.ORIGO.y-sprite.getHeight()/2);
     }
 
 
@@ -33,5 +34,9 @@ public class PlaneArm {
 
     public Sprite getSprite() {
         return sprite;
+    }
+
+    public void setSpriteTexture(){
+        this.sprite.setTexture(new Texture(Gdx.files.internal("images/armpixel.png")));
     }
 }

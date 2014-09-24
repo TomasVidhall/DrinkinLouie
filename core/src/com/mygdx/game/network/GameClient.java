@@ -47,6 +47,11 @@ public class GameClient {
                     player = addPlayerResponse.getPlayer();
                     System.out.println(addPlayerResponse.getText());
                 }
+
+                if(o instanceof ServerUpdate){
+                    ServerUpdate update = (ServerUpdate) o;
+                    updateClient(update);
+                }
             }
 
             @Override
@@ -66,6 +71,11 @@ public class GameClient {
 
     }
 
+    private void updateClient(ServerUpdate update) {
+        GameScreen screen = (GameScreen) game.getScreen();
+        screen.updateFromServer(update);
+
+    }
 
 
     private void hitPlayer(Player responsePlayer) {
@@ -107,6 +117,7 @@ public class GameClient {
             StartGameRequest startGameRequest = new StartGameRequest();
             startGameRequest.setGameSettings(settings);
             startGameRequest.setPlayer(this.getPlayer());
+
             this.getClient().sendTCP(startGameRequest);
         }
     }

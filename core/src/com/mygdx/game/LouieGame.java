@@ -13,8 +13,11 @@ import com.mygdx.game.model.Player;
 import com.mygdx.game.network.GameClient;
 import com.mygdx.game.tween.SpriteAccessor;
 
+import javax.xml.soap.Text;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class LouieGame extends Game {
 
@@ -26,7 +29,7 @@ public class LouieGame extends Game {
 
     public static String platform;
 
-    public static AssetManager assetManager;
+    private HashMap<String,Texture> textureHashMap;
 
     public LouieGame(String platform) {
         this.platform = platform;
@@ -44,8 +47,10 @@ public class LouieGame extends Game {
         this.WIDTH = Gdx.graphics.getWidth();
         this.HEIGHT = Gdx.graphics.getHeight();
 
-        this.assetManager = new AssetManager();
-        assetManager.load("images/handle1.png", Texture.class);
+        this.textureHashMap = new HashMap<String, Texture>();
+
+        textureHashMap.put("images/handle1.png",new Texture(Gdx.files.internal("images/handle1.png")));
+       // assetManager.load("images/handle1.png", Texture.class);
 
         ORIGO = new Vector2(WIDTH / 2, HEIGHT / 2);
 
@@ -86,4 +91,7 @@ public class LouieGame extends Game {
     }
 
 
+    public HashMap<String, Texture> getTextureHashMap() {
+        return textureHashMap;
+    }
 }

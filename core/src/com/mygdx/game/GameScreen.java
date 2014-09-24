@@ -4,14 +4,13 @@ import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.model.Center;
-import com.mygdx.game.model.Chicken;
-import com.mygdx.game.model.Louie;
-import com.mygdx.game.model.Player;
+import com.mygdx.game.model.*;
 import com.mygdx.game.network.GameClient;
+import com.mygdx.game.network.ServerUpdate;
 
 import java.util.List;
 
@@ -42,10 +41,17 @@ public class GameScreen implements Screen {
         circleRadius = 250;
         this.players = players;
         this.settings = gameSettings;
-        center = new Center(gameSettings);
+        this.center = new Center(gameSettings);
         this.gameClient = gameClient;
         this.clientPlayer = players.get(gameClient.getPlayer().getPlayerNumber() - 1);
         this.countDown = new CountDown(tweenManager);
+
+        this.center.setSpriteTexture();
+        this.countDown.setUpSprite();
+
+        for(Player player : players){
+            player.setUpSpriteTextures();
+        }
 
     }
 
@@ -88,7 +94,7 @@ public class GameScreen implements Screen {
             countDown.update(delta);
         }
 
-        update(delta);
+     //   update(delta);
         spriteBatch.begin();
         for (Player p : players) {
             p.render(spriteBatch);
@@ -188,5 +194,54 @@ public class GameScreen implements Screen {
 
     public void hitPlayer(int playerNumber) {
         System.out.println("FAIL");
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public void setCenter(Center center) {
+        this.center = center;
+    }
+
+    public void setCountDown(CountDown countDown) {
+        this.countDown = countDown;
+    }
+
+    public void updateFromServer(ServerUpdate update) {
+
+
+        center.getSprite().setRotation(update.getCenter().getSprite().getRotation());
+
+
+        List<Louie> updateLouies = update.getCenter().getLouies();
+        List<Louie> louies = this.center.getLouies();
+        Sprite updateSprite;
+        Sprite louieSprite;
+        for (int i = 0; i < updateLouies.size(); i++) {
+            Louie louie = louies.get(i);
+            Louie updateLouie = updateLouies.get(i);
+
+            louie.setCurrentCircleRadius(updateLouie.getCurrentCircleRadius());
+            louie.setAirborne(updateLouie.isAirborne());
+
+            updateSprite = updateLouie.getSprite();
+            louieSprite = louie.getSprite();
+
+            louieSprite.setScale(updateSprite.getScaleX());
+            louieSprite.setPosition(updateSprite.getX(),updateSprite.getY());
+            louieSprite.setRotation(updateSprite.getRotation());
+
+            PlaneArm arm = louie.getPlaneArm();
+            PlaneArm updateArm = updateLouie.getPlaneArm();
+
+            arm.getSprite().setRotation(updateArm.getSprite().getRotation());
+            arm.getSprite().setSize(updateArm.getSprite().getWidth(),updateArm.getSprite().getHeight());
+        }
+
+        this.countDown = update.getCountDown();
+        this.players = update.getPlayers();
+
+
     }
 }
